@@ -1,0 +1,29 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708163324",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": true,
+  "entityTableName": "subscriber_wallet",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "walletNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SubscriberWallet",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

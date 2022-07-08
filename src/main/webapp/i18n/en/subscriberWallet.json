@@ -1,0 +1,25 @@
+{
+  "collectorApp": {
+    "subscriberWallet": {
+      "home": {
+        "title": "Subscriber Wallets",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Subscriber Wallet",
+        "createOrEditLabel": "Create or edit a Subscriber Wallet",
+        "notFound": "No Subscriber Wallets found"
+      },
+      "created": "A new Subscriber Wallet is created with identifier {{ param }}",
+      "updated": "A Subscriber Wallet is updated with identifier {{ param }}",
+      "deleted": "A Subscriber Wallet is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Subscriber Wallet {{ id }}?"
+      },
+      "detail": {
+        "title": "Subscriber Wallet"
+      },
+      "name": "Name",
+      "walletNumber": "Wallet Number",
+      "amount": "Amount"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+
+application {
+  config {
+    baseName collector,
+    applicationType gateway,
+    packageName ng.com.sokoto,
+    authenticationType jwt,
+    databaseType mongodb,
+    prodDatabaseType mongodb,
+    devDatabaseType mongodb,
+    enableTranslation true,
+    jhiPrefix jhi,
+    languages [en, fr],
+    messageBroker kafka,
+    dtoSuffix DTO,
+    reactive true,
+    testFrameworks [ protractor, cucumber, gatling ]
+    clientFramework react
+  }
+  entities 	
+  	    SubscriberWallet
+}
+@embedded
+entity SubscriberWallet {
+	name String,
+    walletNumber String,
+    amount String
+}
+
