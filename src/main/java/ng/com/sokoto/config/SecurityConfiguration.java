@@ -94,6 +94,7 @@ public class SecurityConfiguration {
             .authorizeExchange()
             .pathMatchers("/").permitAll()
             .pathMatchers("/*.*").permitAll()
+            //.pathMatchers("/api/account").permitAll()
             .pathMatchers("/api/authenticate").permitAll()
             .pathMatchers("/api/register").permitAll()
             .pathMatchers("/api/activate").permitAll()

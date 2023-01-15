@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
 import ng.com.sokoto.config.Constants;
-import ng.com.sokoto.domain.Authority;
-import ng.com.sokoto.domain.User;
+import ng.com.sokoto.web.domain.Authority;
+import ng.com.sokoto.web.domain.User;
 
 /**
  * A DTO representing a user, with his authorities.

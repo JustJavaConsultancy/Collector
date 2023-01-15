@@ -8,6 +8,13 @@
       "entities": {
         "main": "Entities",
         "subscriberWallet": "Subscriber Wallet",
+        "subscriber": "Subscriber",
+        "payItemType": "Pay Item Type",
+        "nextOfKin": "Next Of Kin",
+        "facilityType": "Facility Type",
+        "facility": "Facility",
+        "idType": "Id Type",
+        "dateInterval": "Date Interval",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

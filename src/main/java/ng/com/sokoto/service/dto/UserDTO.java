@@ -1,6 +1,6 @@
 package ng.com.sokoto.service.dto;
 
-import ng.com.sokoto.domain.User;
+import ng.com.sokoto.web.domain.User;
 
 /**
  * A DTO representing a user, with only the public attributes.

@@ -18,12 +18,113 @@ application {
     clientFramework react
   }
   entities 	
-  	    SubscriberWallet
+  	    SubscriberWallet,
+  	    Subscriber,
+  	    PayItemType,
+  	    NextOfKin,
+  	    FacilityType,
+  	    Facility,
+  	    IdType,
+  	    DateInterval
 }
 @embedded
 entity SubscriberWallet {
 	name String,
     walletNumber String,
     amount String
+}
+entity Subscriber {
+    lastName String,
+    firstName String,
+    /** category SubscriberCategory,**/
+    middleName String,
+    type SubscriberTypeEnum,
+    dateOfBirth LocalDate,
+    phoneNumber String,
+    idNumber String,
+    status SubscriberStatusEnum,
+    address String,
+    email String,
+    dateRegistered LocalDate,
+}
+@embedded
+entity PayItemType {
+    description String,
+    rate Double,
+    type TypeEnum,
+    rateType RateTypeEnum,
+    rentComponent Boolean
+}
+@embedded
+entity NextOfKin {
+    name String,
+    address String,
+    phoneNumber String
+}
+@embedded
+entity FacilityType {
+    id String,
+    name String
+}
+entity Facility {
+    id String,
+    description String, 
+    userType UserTypeEnum,
+    rentCycle RentCycleEnum,
+    location String,
+    refNumber String,
+    size Double,
+    dateRegistered LocalDate,
+    status StatusEnum
+}
+@embedded
+entity IdType {
+    code String,
+    description String
+}
+entity DateInterval {
+    interval Integer,
+    measure DateIntervalMeasureEnum
+}
+enum DateIntervalMeasureEnum{
+    Day,
+    Month,
+    Year
+}
+enum StatusEnum{
+    Vacant,
+    Occupied,
+    Reserved
+}
+enum RentCycleEnum{
+    Daily,
+    Weekly,
+    Monthly,
+    Yearly
+}
+enum UserTypeEnum {
+  SingleUser,
+  MultiUser
+}
+enum SubscriberTypeEnum{
+ Individual,
+ Corporate
+}
+enum SubscriberStatusEnum{
+ Active,
+ InActive
+}
+enum TypeEnum {
+  Amount,
+  Percentage
+}
+enum RateTypeEnum{
+    FixedGlobal,
+    FixedFacility,
+    Variable
+}
+entity DateInterval {
+    interval Integer,
+    measure DateIntervalMeasureEnum
 }
 

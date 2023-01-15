@@ -1,4 +1,4 @@
-package ng.com.sokoto.domain;
+package ng.com.sokoto.web.domain;
 
 import java.io.Serializable;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -17,7 +17,7 @@ public class SubscriberWallet implements Serializable {
     private String walletNumber;
 
     @Field("amount")
-    private String amount;
+    private Double amount;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -47,16 +47,16 @@ public class SubscriberWallet implements Serializable {
         this.walletNumber = walletNumber;
     }
 
-    public String getAmount() {
+    public Double getAmount() {
         return this.amount;
     }
 
-    public SubscriberWallet amount(String amount) {
+    public SubscriberWallet amount(Double amount) {
         this.setAmount(amount);
         return this;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

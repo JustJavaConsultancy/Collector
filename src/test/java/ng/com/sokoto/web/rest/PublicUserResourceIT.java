@@ -3,10 +3,10 @@ package ng.com.sokoto.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import ng.com.sokoto.IntegrationTest;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.repository.UserRepository;
 import ng.com.sokoto.security.AuthoritiesConstants;
 import ng.com.sokoto.service.dto.UserDTO;
+import ng.com.sokoto.web.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

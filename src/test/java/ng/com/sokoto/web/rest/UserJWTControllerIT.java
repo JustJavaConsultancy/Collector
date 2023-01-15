@@ -1,8 +1,8 @@
 package ng.com.sokoto.web.rest;
 
 import ng.com.sokoto.IntegrationTest;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.repository.UserRepository;
+import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.rest.vm.LoginVM;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

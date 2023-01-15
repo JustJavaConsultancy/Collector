@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import java.util.Locale;
 import ng.com.sokoto.IntegrationTest;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.repository.UserRepository;
+import ng.com.sokoto.web.domain.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

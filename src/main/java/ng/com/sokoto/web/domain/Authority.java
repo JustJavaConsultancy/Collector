@@ -1,4 +1,4 @@
-package ng.com.sokoto.domain;
+package ng.com.sokoto.web.domain;
 
 import java.io.Serializable;
 import java.util.Objects;

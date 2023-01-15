@@ -5,9 +5,9 @@ import io.mongock.api.annotations.Execution;
 import io.mongock.api.annotations.RollbackExecution;
 import java.time.Instant;
 import ng.com.sokoto.config.Constants;
-import ng.com.sokoto.domain.Authority;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.security.AuthoritiesConstants;
+import ng.com.sokoto.web.domain.Authority;
+import ng.com.sokoto.web.domain.User;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**

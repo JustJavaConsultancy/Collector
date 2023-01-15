@@ -1,6 +1,6 @@
 package ng.com.sokoto.repository;
 
-import ng.com.sokoto.domain.Authority;
+import ng.com.sokoto.web.domain.Authority;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
 /**

@@ -4,14 +4,14 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import ng.com.sokoto.config.Constants;
-import ng.com.sokoto.domain.Authority;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.repository.AuthorityRepository;
 import ng.com.sokoto.repository.UserRepository;
 import ng.com.sokoto.security.AuthoritiesConstants;
 import ng.com.sokoto.security.SecurityUtils;
 import ng.com.sokoto.service.dto.AdminUserDTO;
 import ng.com.sokoto.service.dto.UserDTO;
+import ng.com.sokoto.web.domain.Authority;
+import ng.com.sokoto.web.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -118,9 +118,9 @@ public class UserService {
                     newUser.setImageUrl(userDTO.getImageUrl());
                     newUser.setLangKey(userDTO.getLangKey());
                     // new user is not active
-                    newUser.setActivated(false);
+                    newUser.setActivated(true);
                     // new user gets registration key
-                    newUser.setActivationKey(RandomUtil.generateActivationKey());
+                    //newUser.setActivationKey(RandomUtil.generateActivationKey());
                     return newUser;
                 })
             )

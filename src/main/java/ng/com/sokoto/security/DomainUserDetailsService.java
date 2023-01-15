@@ -2,8 +2,8 @@ package ng.com.sokoto.security;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.repository.UserRepository;
+import ng.com.sokoto.web.domain.User;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

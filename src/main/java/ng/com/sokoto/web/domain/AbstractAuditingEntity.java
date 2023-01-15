@@ -1,4 +1,4 @@
-package ng.com.sokoto.domain;
+package ng.com.sokoto.web.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;

@@ -20,7 +20,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import ng.com.sokoto.IntegrationTest;
 import ng.com.sokoto.config.Constants;
-import ng.com.sokoto.domain.User;
+import ng.com.sokoto.web.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

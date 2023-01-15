@@ -2,10 +2,10 @@ package ng.com.sokoto.service.mapper;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import ng.com.sokoto.domain.Authority;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.service.dto.AdminUserDTO;
 import ng.com.sokoto.service.dto.UserDTO;
+import ng.com.sokoto.web.domain.Authority;
+import ng.com.sokoto.web.domain.User;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

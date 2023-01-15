@@ -7,15 +7,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import ng.com.sokoto.IntegrationTest;
-import ng.com.sokoto.config.Constants;
-import ng.com.sokoto.domain.User;
 import ng.com.sokoto.repository.UserRepository;
-import ng.com.sokoto.service.dto.AdminUserDTO;
+import ng.com.sokoto.web.domain.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import tech.jhipster.security.RandomUtil;
 
 /**

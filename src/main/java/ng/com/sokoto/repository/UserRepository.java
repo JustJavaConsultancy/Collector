@@ -1,7 +1,7 @@
 package ng.com.sokoto.repository;
 
 import java.time.Instant;
-import ng.com.sokoto.domain.User;
+import ng.com.sokoto.web.domain.User;
 import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;

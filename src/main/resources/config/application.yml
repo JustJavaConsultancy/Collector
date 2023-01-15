@@ -20,6 +20,10 @@ spring:
   config:
     activate:
       on-profile: '!api-docs'
+  data:
+    mongodb:
+      host: 172.31.49.33
+      port: 27017
 springdoc:
   api-docs:
     enabled: false
