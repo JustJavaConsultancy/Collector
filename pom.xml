@@ -437,7 +437,11 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>io.github.kaiso.relmongo</groupId>
+            <artifactId>relmongo</artifactId>
+            <version>3.4.2</version>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 

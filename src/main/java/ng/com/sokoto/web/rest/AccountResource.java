@@ -1,8 +1,10 @@
 package ng.com.sokoto.web.rest;
 
 import java.security.Principal;
+import java.time.Duration;
 import java.util.Objects;
 import javax.validation.Valid;
+import ng.com.sokoto.controller.ApiResponse;
 import ng.com.sokoto.repository.UserRepository;
 import ng.com.sokoto.security.SecurityUtils;
 import ng.com.sokoto.service.MailService;
@@ -16,6 +18,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -148,11 +157,26 @@ public class AccountResource {
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the new password is incorrect.
      */
     @PostMapping(path = "/account/change-password")
-    public Mono<Void> changePassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
+    //@PreAuthorize("hasRole('USER')")
+    public Mono<ApiResponse> changePassword(
+        @AuthenticationPrincipal Mono<UserDetails> details,
+        @RequestBody PasswordChangeDTO passwordChangeDto
+    ) {
+        Mono<SecurityContext> context = ReactiveSecurityContextHolder.getContext();
+        System.out.println(
+            " 0 The context==========================================" +
+            "================================================" +
+            "=============================" +
+            context
+        );
+
+        Mono<String> loginUser = details.cast(User.class).map(User::getUsername);
         if (isPasswordLengthInvalid(passwordChangeDto.getNewPassword())) {
             throw new InvalidPasswordException();
         }
-        return userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+        ApiResponse<Object> apiResponse = new ApiResponse<>("Success", HttpStatus.OK.value(), null);
+        userService.changePassword(loginUser, passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+        return Mono.just(apiResponse);
     }
 
     /**

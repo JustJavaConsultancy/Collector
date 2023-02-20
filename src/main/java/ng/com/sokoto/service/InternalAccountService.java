@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.InternalAccountDto;
 import ng.com.sokoto.mapper.InternalAccountMapper;
 import ng.com.sokoto.repository.InternalAccountRepository;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.web.domain.InternalAccount;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;

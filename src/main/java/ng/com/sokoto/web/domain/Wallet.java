@@ -1,14 +1,22 @@
 package ng.com.sokoto.web.domain;
 
 import java.io.Serializable;
+import java.util.List;
+import ng.com.sokoto.web.domain.enumeration.DebitCreditEnum;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
- * A SubscriberWallet.
+ * A Wallet.
  */
-public class SubscriberWallet implements Serializable {
+@Document(collection = "wallet")
+public class Wallet implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    private String id;
 
     @Field("name")
     private String name;
@@ -25,7 +33,7 @@ public class SubscriberWallet implements Serializable {
         return this.name;
     }
 
-    public SubscriberWallet name(String name) {
+    public Wallet name(String name) {
         this.setName(name);
         return this;
     }
@@ -38,7 +46,7 @@ public class SubscriberWallet implements Serializable {
         return this.walletNumber;
     }
 
-    public SubscriberWallet walletNumber(String walletNumber) {
+    public Wallet walletNumber(String walletNumber) {
         this.setWalletNumber(walletNumber);
         return this;
     }
@@ -51,7 +59,7 @@ public class SubscriberWallet implements Serializable {
         return this.amount;
     }
 
-    public SubscriberWallet amount(Double amount) {
+    public Wallet amount(Double amount) {
         this.setAmount(amount);
         return this;
     }
@@ -67,7 +75,7 @@ public class SubscriberWallet implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SubscriberWallet)) {
+        if (!(o instanceof Wallet)) {
             return false;
         }
         return false;
@@ -82,10 +90,37 @@ public class SubscriberWallet implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "SubscriberWallet{" +
+        return "Wallet{" +
             ", name='" + getName() + "'" +
             ", walletNumber='" + getWalletNumber() + "'" +
             ", amount='" + getAmount() + "'" +
             "}";
+    }
+
+    public static Wallet createNewWallet(String name, String number) {
+        Wallet wallet = new Wallet();
+        wallet.setId(number);
+        wallet.setWalletNumber(number);
+        wallet.setAmount(0.00D);
+        wallet.setName(name);
+        return wallet;
+    }
+
+    public JournalLine debit(Double amount) {
+        setAmount(getAmount() - amount);
+        return JournalLine.createJournalLiine(amount, this, DebitCreditEnum.Debit);
+    }
+
+    public JournalLine credit(Double amount) {
+        setAmount(getAmount() + amount);
+        return JournalLine.createJournalLiine(amount, this, DebitCreditEnum.Credit);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

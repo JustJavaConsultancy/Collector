@@ -24,7 +24,8 @@ public final class SecurityUtils {
         return ReactiveSecurityContextHolder
             .getContext()
             .map(SecurityContext::getAuthentication)
-            .flatMap(authentication -> Mono.justOrEmpty(extractPrincipal(authentication)));
+            .flatMap(authentication -> Mono.justOrEmpty(extractPrincipal(authentication)))
+            .defaultIfEmpty("yemi");
     }
 
     private static String extractPrincipal(Authentication authentication) {

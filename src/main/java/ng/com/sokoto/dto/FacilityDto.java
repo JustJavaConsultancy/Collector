@@ -16,7 +16,7 @@ public class FacilityDto extends AbstractDto<String> {
     private String id;
     private String description;
     private UserTypeEnum userType;
-    private RentCycleEnum rentCycle;
+    private String rentCycle;
     private String location;
     private String refNumber;
     private Double size;
@@ -27,7 +27,7 @@ public class FacilityDto extends AbstractDto<String> {
     private StatusEnum status;
     private String category;
 
-    private Collection<PayItemType> payItemTypes;
+    private Collection<String> payItemTypes;
 
     public FacilityDto() {}
 
@@ -63,11 +63,11 @@ public class FacilityDto extends AbstractDto<String> {
         return this.userType;
     }
 
-    public void setRentCycle(RentCycleEnum rentCycle) {
+    public void setRentCycle(String rentCycle) {
         this.rentCycle = rentCycle;
     }
 
-    public RentCycleEnum getRentCycle() {
+    public String getRentCycle() {
         return this.rentCycle;
     }
 
@@ -119,11 +119,11 @@ public class FacilityDto extends AbstractDto<String> {
         return this.category;
     }
 
-    public Collection<PayItemType> getPayItemTypes() {
+    public Collection<String> getPayItemTypes() {
         return payItemTypes;
     }
 
-    public void setPayItemTypes(Collection<PayItemType> payItemTypes) {
+    public void setPayItemTypes(Collection<String> payItemTypes) {
         this.payItemTypes = payItemTypes;
     }
 }

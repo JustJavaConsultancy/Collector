@@ -6,8 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.FacilityDto;
 import ng.com.sokoto.mapper.FacilityMapper;
 import ng.com.sokoto.repository.FacilityRepository;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.web.domain.Facility;
-import ng.com.sokoto.web.domain.Subscriber;
+import ng.com.sokoto.web.domain.enumeration.StatusEnum;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -33,14 +34,19 @@ public class FacilityService {
         return facilityMapper.toDto(repository.save(entity));
     }
 
+    public Facility save(Facility facility) {
+        return repository.save(facility);
+    }
+
     public void deleteById(String id) {
         repository.deleteById(id);
     }
 
     public FacilityDto findById(String id) {
+        System.out.println(" The ID Sent here============================" + id);
         Optional<Facility> facility = repository.findById(id);
 
-        System.out.println(" The Actual Facility retrieved===" + facility.get());
+        //System.out.println(" The Actual Facility retrieved===" + facility.get());
 
         return facilityMapper.toDto(facility.orElseThrow(ResourceNotFoundException::new));
     }
@@ -53,6 +59,19 @@ public class FacilityService {
         Page<Facility> entityPage = repository.findAll(pageable);
         List<Facility> entities = entityPage.getContent();
         return new PageImpl<>(facilityMapper.toDto(entities), pageable, entityPage.getTotalElements());
+    }
+
+    public Page<Facility> findByStatus(StatusEnum status, Pageable pageable) {
+        System.out.println(" The Status Here===================================================================" + status + " as received");
+        Page<Facility> entityPage = repository.findDistinctByStatusOrderByCategory_IdAsc(status, pageable);
+        List<Facility> entities = entityPage.getContent();
+        return new PageImpl<>(entities, pageable, entityPage.getTotalElements());
+    }
+
+    public Page<Facility> findByCondition2(FacilityDto facilityDto, Pageable pageable) {
+        Page<Facility> entityPage = repository.findAll(pageable);
+        List<Facility> entities = entityPage.getContent();
+        return new PageImpl<>(entities, pageable, entityPage.getTotalElements());
     }
 
     public FacilityDto update(FacilityDto facilityDto, String id) {

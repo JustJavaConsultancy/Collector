@@ -26,8 +26,17 @@ public class JWTFilter implements WebFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         String jwt = resolveToken(exchange.getRequest());
+        //exchange.getResponse().getHeaders().add("Access-Control-Allow-Origin", "http://localhost:3012");
+        //exchange.getResponse().getHeaders().add("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        //exchange.getResponse().getHeaders().add("Access-Control-Allow-Headers", "X-Auth-Token, Content-Type");
         if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
             Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+            System.out.println(
+                "-------------------authentication------------------------------------" +
+                "-----------------------------------------------------------------------------------" +
+                "----------------------------" +
+                authentication
+            );
             return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
         }
         return chain.filter(exchange);

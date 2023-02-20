@@ -4,9 +4,11 @@ import io.swagger.annotations.Api;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.FacilityDto;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.service.FacilityService;
-import ng.com.sokoto.service.ResourceNotFoundException;
 import ng.com.sokoto.util.AsyncUtil;
+import ng.com.sokoto.web.domain.Facility;
+import ng.com.sokoto.web.domain.enumeration.StatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,10 +18,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-@RequestMapping("/api/facilities")
+@RequestMapping("/api")
 @RestController
 @Slf4j
-@Api("facilities")
+@Api("facility")
 public class FacilityController {
 
     private final FacilityService facilityService;
@@ -30,7 +32,7 @@ public class FacilityController {
         this.asyncUtil = asyncUtil;
     }
 
-    @PostMapping
+    @PostMapping("/facility")
     public Mono<ResponseEntity<Void>> save(@RequestBody @Validated FacilityDto facilityDto) {
         return asyncUtil.asyncMono(() -> {
             facilityService.save(facilityDto);
@@ -38,7 +40,7 @@ public class FacilityController {
         });
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/facility/{id}")
     public Mono<ResponseEntity<FacilityDto>> findById(@PathVariable("id") String id) {
         return asyncUtil.asyncMono(() -> {
             FacilityDto facility = facilityService.findById(id);
@@ -46,7 +48,7 @@ public class FacilityController {
         });
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/facility/{id}")
     public Mono<ResponseEntity<Void>> delete(@PathVariable("id") String id) {
         return asyncUtil.asyncMono(() -> {
             Optional
@@ -60,18 +62,31 @@ public class FacilityController {
         });
     }
 
-    @GetMapping("/page-query")
-    public Mono<ResponseEntity<Page<FacilityDto>>> pageQuery(
+    @GetMapping("/facilities")
+    public Mono<ResponseEntity<Page<Facility>>> pageQuery(
         FacilityDto facilityDto,
         @PageableDefault(sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
+        /*        System.out.println(" The pageable here===Page Number"+pageable.getPageNumber()
+        +"  Page Size=="+pageable.getPageSize());*/
         return asyncUtil.asyncMono(() -> {
-            Page<FacilityDto> facilityPage = facilityService.findByCondition(facilityDto, pageable);
+            Page<Facility> facilityPage = facilityService.findByCondition2(facilityDto, pageable);
             return ResponseEntity.ok(facilityPage);
         });
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/facilitiesbystatus/{status}")
+    public Mono<ResponseEntity<Page<Facility>>> pageQueryByStatus(
+        @PathVariable("status") StatusEnum status,
+        @PageableDefault(sort = "createAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        return asyncUtil.asyncMono(() -> {
+            Page<Facility> facilityPage = facilityService.findByStatus(status, pageable);
+            return ResponseEntity.ok(facilityPage);
+        });
+    }
+
+    @PutMapping("/facility/{id}")
     public Mono<ResponseEntity<Void>> update(@RequestBody @Validated FacilityDto facilityDto, @PathVariable("id") String id) {
         return asyncUtil.asyncMono(() -> {
             facilityService.update(facilityDto, id);

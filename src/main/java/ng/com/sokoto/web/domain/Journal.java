@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "journal")
 public class Journal {
 
+    public static final String SEQUENCE_NAME = "journal_sequence";
+
     @Id
     private String refNumber;
 
@@ -46,5 +48,23 @@ public class Journal {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "Journal{" +
+            "refNumber='" +
+            refNumber +
+            '\'' +
+            ", entryDate=" +
+            entryDate +
+            ", journalLines=" +
+            journalLines +
+            ", description='" +
+            description +
+            '\'' +
+            '}'
+        );
     }
 }

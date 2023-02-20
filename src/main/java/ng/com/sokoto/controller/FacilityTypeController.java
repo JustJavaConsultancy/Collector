@@ -1,13 +1,11 @@
 package ng.com.sokoto.controller;
 
 import io.swagger.annotations.Api;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.FacilityTypeDto;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.service.FacilityTypeService;
-import ng.com.sokoto.service.ResourceNotFoundException;
 import ng.com.sokoto.util.AsyncUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

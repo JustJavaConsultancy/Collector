@@ -1,6 +1,7 @@
 package ng.com.sokoto.config;
 
-import io.mongock.runner.springboot.EnableMongock;
+import io.github.kaiso.relmongo.config.EnableRelMongo;
+//import io.mongock.runner.springboot.EnableMongock;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
@@ -19,8 +20,9 @@ import tech.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConvert
 import tech.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 
 @Configuration
-@EnableMongock
+//@EnableMongock
 @EnableReactiveMongoRepositories("ng.com.sokoto.repository")
+@EnableRelMongo
 @Profile("!" + JHipsterConstants.SPRING_PROFILE_CLOUD)
 @Import(value = { MongoAutoConfiguration.class, MongoReactiveAutoConfiguration.class })
 public class DatabaseConfiguration {

@@ -85,6 +85,7 @@ public class UserService {
     }
 
     public Mono<User> registerUser(AdminUserDTO userDTO, String password) {
+        System.out.println(" The sent AdminUserDTO===" + userDTO);
         return userRepository
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .flatMap(existingUser -> {
@@ -237,6 +238,7 @@ public class UserService {
     }
 
     private Mono<User> saveUser(User user) {
+        System.out.println(" Inside saveUser...............................................");
         return SecurityUtils
             .getCurrentUserLogin()
             .switchIfEmpty(Mono.just(Constants.SYSTEM))
@@ -245,27 +247,33 @@ public class UserService {
                     user.setCreatedBy(login);
                 }
                 user.setLastModifiedBy(login);
+                System.out.println(" Saving the User Here........................");
                 return userRepository.save(user);
             });
     }
 
-    public Mono<Void> changePassword(String currentClearTextPassword, String newPassword) {
-        return SecurityUtils
-            .getCurrentUserLogin()
+    public Mono<Void> changePassword(Mono<String> login, String currentClearTextPassword, String newPassword) {
+        System.out.println(" Inside changePassword...." + SecurityUtils.getCurrentUserJWT());
+        /*        Mono<String> jwt = SecurityUtils.getCurrentUserLogin();
+        jwt.subscribe(x-> System.out.println(" The login Here ==========================="+x));*/
+        login
             .flatMap(userRepository::findOneByLogin)
-            .publishOn(Schedulers.boundedElastic())
             .map(user -> {
+                System.out.println(" The User in here....................." + user);
                 String currentEncryptedPassword = user.getPassword();
                 if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
                     throw new InvalidPasswordException();
                 }
                 String encryptedPassword = passwordEncoder.encode(newPassword);
                 user.setPassword(encryptedPassword);
+                System.out.println(" About to return user to the next stage in the pipe.......................");
                 return user;
             })
             .flatMap(this::saveUser)
-            .doOnNext(user -> log.debug("Changed password for User: {}", user))
-            .then();
+            .doOnNext(u -> System.out.println(" The user finally saved=====" + u))
+            .subscribe();
+
+        return null;
     }
 
     public Flux<AdminUserDTO> getAllManagedUsers(Pageable pageable) {

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.JournalLineDto;
 import ng.com.sokoto.mapper.JournalLineMapper;
 import ng.com.sokoto.repository.JournalLineRepository;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.web.domain.JournalLine;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;

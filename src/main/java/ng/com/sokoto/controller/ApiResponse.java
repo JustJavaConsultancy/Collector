@@ -11,7 +11,7 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    T data;
+    private T data;
 
     public String getMessage() {
         return message;

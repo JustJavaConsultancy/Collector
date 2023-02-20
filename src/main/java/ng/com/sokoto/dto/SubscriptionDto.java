@@ -1,10 +1,13 @@
 package ng.com.sokoto.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import java.time.LocalDate;
 import ng.com.sokoto.annotation.CheckDate;
 import ng.com.sokoto.web.domain.Facility;
+import ng.com.sokoto.web.domain.Invoice;
 import ng.com.sokoto.web.domain.Subscriber;
+import ng.com.sokoto.web.domain.Wallet;
 import ng.com.sokoto.web.domain.enumeration.RentCycleEnum;
 import ng.com.sokoto.web.dto.AbstractDto;
 
@@ -12,6 +15,7 @@ import ng.com.sokoto.web.dto.AbstractDto;
 public class SubscriptionDto extends AbstractDto<String> {
 
     private String id;
+    private String transType;
     private String subscriber;
     private String facility;
 
@@ -19,9 +23,12 @@ public class SubscriptionDto extends AbstractDto<String> {
     private LocalDate applicationDate;
 
     private String allocationRefNumber;
-    private RentCycleEnum rentCycle;
 
+    private RentCycleEnum rentCycle;
     private String note;
+    private Invoice invoice;
+    private Wallet receivable;
+    private Wallet revenue;
 
     public SubscriptionDto() {}
 
@@ -79,5 +86,37 @@ public class SubscriptionDto extends AbstractDto<String> {
 
     public RentCycleEnum getRentCycle() {
         return this.rentCycle;
+    }
+
+    public String getTransType() {
+        return transType;
+    }
+
+    public void setTransType(String transType) {
+        this.transType = transType;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public Wallet getReceivable() {
+        return receivable;
+    }
+
+    public void setReceivable(Wallet receivable) {
+        this.receivable = receivable;
+    }
+
+    public Wallet getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(Wallet revenue) {
+        this.revenue = revenue;
     }
 }

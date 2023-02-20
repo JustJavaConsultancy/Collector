@@ -7,7 +7,7 @@ import ng.com.sokoto.annotation.CheckEmail;
 import ng.com.sokoto.annotation.CheckMobile;
 import ng.com.sokoto.web.domain.IdType;
 import ng.com.sokoto.web.domain.NextOfKin;
-import ng.com.sokoto.web.domain.SubscriberWallet;
+import ng.com.sokoto.web.domain.Wallet;
 import ng.com.sokoto.web.domain.enumeration.SubscriberStatusEnum;
 import ng.com.sokoto.web.domain.enumeration.SubscriberTypeEnum;
 
@@ -20,6 +20,16 @@ public class SubscriberDto extends AbstractDto<String> {
     private String firstName;
     private String middleName;
     private SubscriberTypeEnum type;
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
+    }
+
+    private Wallet wallet;
 
     @CheckDate
     private LocalDate dateOfBirth;
@@ -39,7 +49,7 @@ public class SubscriberDto extends AbstractDto<String> {
 
     private IdType idDocument;
     private NextOfKin nextOfKin;
-    //private SubscriberWallet wallet;
+    //private Wallet wallet;
     private String login;
 
     public SubscriberDto() {}
@@ -165,11 +175,11 @@ public class SubscriberDto extends AbstractDto<String> {
     }
 
     /*
-    public void setWallet(SubscriberWallet wallet) {
+    public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }
 
-    public SubscriberWallet getWallet() {
+    public Wallet getWallet() {
         return this.wallet;
     }
 */

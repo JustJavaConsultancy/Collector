@@ -12,17 +12,9 @@ public class JournalLine {
     @Id
     private String id;
 
-    private InternalAccount account;
+    private String walletNumber;
     private Double amount;
     private DebitCreditEnum debitCredit;
-
-    public InternalAccount getAccount() {
-        return account;
-    }
-
-    public void setAccount(InternalAccount account) {
-        this.account = account;
-    }
 
     public Double getAmount() {
         return amount;
@@ -46,5 +38,48 @@ public class JournalLine {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getWalletNumber() {
+        return walletNumber;
+    }
+
+    public void setWalletNumber(String walletNumber) {
+        this.walletNumber = walletNumber;
+    }
+
+    public static JournalLine createJournalLiine(Double amount, Wallet wallet, DebitCreditEnum debitCredit) {
+        JournalLine journalLine = new JournalLine();
+        if (amount < 0) throw new RuntimeException("Invalid Amount: Amount Cannot be negative");
+
+        /*
+        if(debitCredit==DebitCreditEnum.Credit)
+            wallet.setAmount(wallet.getAmount()+amount);
+        if(debitCredit==DebitCreditEnum.Debit)
+            wallet.setAmount(wallet.getAmount()-amount);
+*/
+
+        journalLine.setAmount(amount);
+        journalLine.setWalletNumber(wallet.getWalletNumber());
+        journalLine.setDebitCredit(debitCredit);
+        return journalLine;
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "JournalLine{" +
+            "id='" +
+            id +
+            '\'' +
+            ", walletNumber='" +
+            walletNumber +
+            '\'' +
+            ", amount=" +
+            amount +
+            ", debitCredit=" +
+            debitCredit +
+            '}'
+        );
     }
 }

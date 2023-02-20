@@ -1,4 +1,4 @@
-package ng.com.sokoto.service;
+package ng.com.sokoto.service.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

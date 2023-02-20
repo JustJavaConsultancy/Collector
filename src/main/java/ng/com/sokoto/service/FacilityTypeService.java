@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.FacilityTypeDto;
 import ng.com.sokoto.mapper.FacilityTypeMapper;
 import ng.com.sokoto.repository.FacilityTypeRepository;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.web.domain.FacilityType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;

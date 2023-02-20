@@ -4,13 +4,15 @@ import io.swagger.annotations.Api;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.SubscriberDto;
-import ng.com.sokoto.service.ResourceNotFoundException;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.service.SubscriberService;
 import ng.com.sokoto.util.AsyncUtil;
+import ng.com.sokoto.web.domain.Subscriber;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,18 +33,29 @@ public class SubscriberController {
     }
 
     @PostMapping
-    public Mono<ResponseEntity<Void>> save(@RequestBody @Validated SubscriberDto subscriberDto) {
+    public Mono<ResponseEntity<ApiResponse>> save(@RequestBody @Validated SubscriberDto subscriberDto) {
         return asyncUtil.asyncMono(() -> {
-            subscriberService.save(subscriberDto);
-            return ResponseEntity.ok().build();
+            SubscriberDto dto = subscriberService.save(subscriberDto);
+            ApiResponse<SubscriberDto> apiResponse = new ApiResponse<SubscriberDto>("Success", HttpStatus.OK.value(), dto);
+            return ResponseEntity.ok(apiResponse);
         });
     }
 
     @GetMapping("/{id}")
-    public Mono<ResponseEntity<SubscriberDto>> findById(@PathVariable("id") String id) {
+    public Mono<ResponseEntity<ApiResponse>> findById(@PathVariable("id") String id) {
         return asyncUtil.asyncMono(() -> {
             SubscriberDto subscriber = subscriberService.findById(id);
-            return ResponseEntity.ok(subscriber);
+            ApiResponse<SubscriberDto> apiResponse = new ApiResponse<SubscriberDto>("Success", HttpStatus.OK.value(), subscriber);
+            return ResponseEntity.ok(apiResponse);
+        });
+    }
+
+    @GetMapping("/find/{login}")
+    public Mono<ResponseEntity<ApiResponse>> findByLogin(@PathVariable("login") String login) {
+        return asyncUtil.asyncMono(() -> {
+            Subscriber subscriber = subscriberService.finSubscriberByLogin(login);
+            ApiResponse<Subscriber> apiResponse = new ApiResponse<Subscriber>("Success", HttpStatus.OK.value(), subscriber);
+            return ResponseEntity.ok(apiResponse);
         });
     }
 

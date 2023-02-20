@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ng.com.sokoto.dto.PayItemTypeDto;
 import ng.com.sokoto.mapper.PayItemTypeMapper;
 import ng.com.sokoto.repository.PayItemTypeRepository;
+import ng.com.sokoto.service.Exception.ResourceNotFoundException;
 import ng.com.sokoto.web.domain.PayItemType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;

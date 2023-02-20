@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.web.ReactivePageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.ReactiveSortHandlerMethodArgumentResolver;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
@@ -42,8 +43,17 @@ public class WebConfigurer implements WebFluxConfigurer {
     public CorsWebFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = jHipsterProperties.getCors();
+
+        System.out.println(" The CorsConfiguration Here===============" + config);
+        if (config != null) {
+            for (String url : config.getAllowedOrigins()) {
+                System.out.println(" The Allowed Origins Here=======" + url);
+            }
+        }
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
+
+            source.registerCorsConfiguration("/api/**", config);
             source.registerCorsConfiguration("/api/**", config);
             source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v3/api-docs", config);

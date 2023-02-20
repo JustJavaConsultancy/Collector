@@ -30,8 +30,8 @@ public class UserJWTController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/authenticate")
-    public Mono<ResponseEntity<JWTToken>> authorize(@Valid @RequestBody Mono<LoginVM> loginVM) {
+    @PostMapping(value = "/authenticate", consumes = "application/json;charset=utf-8", produces = "application/json;charset=utf-8")
+    public Mono<ResponseEntity<JWTToken>> authorize(@RequestBody Mono<LoginVM> loginVM) {
         return loginVM
             .flatMap(login ->
                 authenticationManager
