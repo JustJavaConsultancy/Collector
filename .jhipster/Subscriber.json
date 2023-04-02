@@ -1,0 +1,64 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708164117",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "subscriber",
+  "fields": [
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "middleName",
+      "fieldType": "String",
+      "javadoc": "category SubscriberCategory,"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "SubscriberTypeEnum",
+      "fieldValues": "Individual,Corporate"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "idNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "SubscriberStatusEnum",
+      "fieldValues": "Active,InActive"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateRegistered",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Subscriber",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

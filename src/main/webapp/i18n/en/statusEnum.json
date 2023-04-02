@@ -1,0 +1,10 @@
+{
+  "collectorApp": {
+    "StatusEnum": {
+      "null": "",
+      "Vacant": "Vacant",
+      "Occupied": "Occupied",
+      "Reserved": "Reserved"
+    }
+  }
+}

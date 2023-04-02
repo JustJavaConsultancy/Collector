@@ -1,0 +1,9 @@
+{
+  "collectorApp": {
+    "SubscriberStatusEnum": {
+      "null": "",
+      "Active": "Active",
+      "InActive": "InActive"
+    }
+  }
+}

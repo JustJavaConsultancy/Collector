@@ -1,0 +1,10 @@
+{
+  "collectorApp": {
+    "DateIntervalMeasureEnum": {
+      "null": "",
+      "Day": "Day",
+      "Month": "Month",
+      "Year": "Year"
+    }
+  }
+}

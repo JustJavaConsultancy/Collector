@@ -1,0 +1,9 @@
+{
+  "collectorApp": {
+    "UserTypeEnum": {
+      "null": "",
+      "SingleUser": "SingleUser",
+      "MultiUser": "MultiUser"
+    }
+  }
+}

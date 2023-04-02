@@ -1,0 +1,37 @@
+{
+  "collectorApp": {
+    "subscriber": {
+      "home": {
+        "title": "Subscribers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Subscriber",
+        "createOrEditLabel": "Create or edit a Subscriber",
+        "notFound": "No Subscribers found"
+      },
+      "created": "A new Subscriber is created with identifier {{ param }}",
+      "updated": "A Subscriber is updated with identifier {{ param }}",
+      "deleted": "A Subscriber is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Subscriber {{ id }}?"
+      },
+      "detail": {
+        "title": "Subscriber"
+      },
+      "id": "ID",
+      "lastName": "Last Name",
+      "firstName": "First Name",
+      "middleName": "Middle Name",
+      "type": "Type",
+      "dateOfBirth": "Date Of Birth",
+      "phoneNumber": "Phone Number",
+      "idNumber": "Id Number",
+      "status": "Status",
+      "address": "Address",
+      "email": "Email",
+      "dateRegistered": "Date Registered",
+      "help": {
+        "middleName": "category SubscriberCategory,"
+      }
+    }
+  }
+}

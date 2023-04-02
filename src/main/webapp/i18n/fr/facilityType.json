@@ -1,0 +1,24 @@
+{
+  "collectorApp": {
+    "facilityType": {
+      "home": {
+        "title": "FacilityTypes",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Facility Type",
+        "createOrEditLabel": "Créer ou éditer un Facility Type",
+        "notFound": "Aucun Facility Type trouvé"
+      },
+      "created": "Un nouveau Facility Type a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Facility Type avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Facility Type avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Facility Type {{ id }} ?"
+      },
+      "detail": {
+        "title": "Facility Type"
+      },
+      "id": "Id",
+      "name": "Name"
+    }
+  }
+}

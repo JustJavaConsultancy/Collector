@@ -1,0 +1,25 @@
+{
+  "collectorApp": {
+    "nextOfKin": {
+      "home": {
+        "title": "NextOfKins",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Next Of Kin",
+        "createOrEditLabel": "Créer ou éditer un Next Of Kin",
+        "notFound": "Aucun Next Of Kin trouvé"
+      },
+      "created": "Un nouveau Next Of Kin a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Next Of Kin avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Next Of Kin avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Next Of Kin {{ id }} ?"
+      },
+      "detail": {
+        "title": "Next Of Kin"
+      },
+      "name": "Name",
+      "address": "Address",
+      "phoneNumber": "Phone Number"
+    }
+  }
+}

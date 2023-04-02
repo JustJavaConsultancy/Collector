@@ -1,0 +1,24 @@
+{
+  "collectorApp": {
+    "idType": {
+      "home": {
+        "title": "Id Types",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Id Type",
+        "createOrEditLabel": "Create or edit a Id Type",
+        "notFound": "No Id Types found"
+      },
+      "created": "A new Id Type is created with identifier {{ param }}",
+      "updated": "A Id Type is updated with identifier {{ param }}",
+      "deleted": "A Id Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Id Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Id Type"
+      },
+      "code": "Code",
+      "description": "Description"
+    }
+  }
+}

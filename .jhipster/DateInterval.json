@@ -1,0 +1,26 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708165848",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "date_interval",
+  "fields": [
+    {
+      "fieldName": "interval",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "measure",
+      "fieldType": "DateIntervalMeasureEnum",
+      "fieldValues": "Day,Month,Year"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "DateInterval",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

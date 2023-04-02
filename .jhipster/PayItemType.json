@@ -1,0 +1,39 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708164532",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": true,
+  "entityTableName": "pay_item_type",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rate",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "TypeEnum",
+      "fieldValues": "Amount,Percentage"
+    },
+    {
+      "fieldName": "rateType",
+      "fieldType": "RateTypeEnum",
+      "fieldValues": "FixedGlobal,FixedFacility,Variable"
+    },
+    {
+      "fieldName": "rentComponent",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PayItemType",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

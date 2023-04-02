@@ -1,0 +1,56 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708165421",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "facility",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "userType",
+      "fieldType": "UserTypeEnum",
+      "fieldValues": "SingleUser,MultiUser"
+    },
+    {
+      "fieldName": "rentCycle",
+      "fieldType": "RentCycleEnum",
+      "fieldValues": "Daily,Weekly,Monthly,Yearly"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "refNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "size",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dateRegistered",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "StatusEnum",
+      "fieldValues": "Vacant,Occupied,Reserved"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Facility",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

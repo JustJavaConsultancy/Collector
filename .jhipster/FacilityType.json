@@ -1,0 +1,25 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708164917",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": true,
+  "entityTableName": "facility_type",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "FacilityType",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

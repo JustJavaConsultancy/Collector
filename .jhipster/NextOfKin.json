@@ -1,0 +1,29 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708164725",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": true,
+  "entityTableName": "next_of_kin",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "NextOfKin",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

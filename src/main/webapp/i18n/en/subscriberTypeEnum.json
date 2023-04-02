@@ -1,0 +1,9 @@
+{
+  "collectorApp": {
+    "SubscriberTypeEnum": {
+      "null": "",
+      "Individual": "Individual",
+      "Corporate": "Corporate"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "collectorApp": {
+    "dateInterval": {
+      "home": {
+        "title": "Date Intervals",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Date Interval",
+        "createOrEditLabel": "Create or edit a Date Interval",
+        "notFound": "No Date Intervals found"
+      },
+      "created": "A new Date Interval is created with identifier {{ param }}",
+      "updated": "A Date Interval is updated with identifier {{ param }}",
+      "deleted": "A Date Interval is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Date Interval {{ id }}?"
+      },
+      "detail": {
+        "title": "Date Interval"
+      },
+      "id": "ID",
+      "interval": "Interval",
+      "measure": "Measure"
+    }
+  }
+}

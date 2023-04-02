@@ -1,0 +1,25 @@
+{
+  "applications": ["collector"],
+  "changelogDate": "20220708165622",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": true,
+  "entityTableName": "id_type",
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "IdType",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

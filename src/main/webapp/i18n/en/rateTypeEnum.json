@@ -1,0 +1,10 @@
+{
+  "collectorApp": {
+    "RateTypeEnum": {
+      "null": "",
+      "FixedGlobal": "FixedGlobal",
+      "FixedFacility": "FixedFacility",
+      "Variable": "Variable"
+    }
+  }
+}

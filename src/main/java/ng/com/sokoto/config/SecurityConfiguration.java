@@ -36,7 +36,6 @@ public class SecurityConfiguration {
     private final ReactiveUserDetailsService userDetailsService;
 
     private final TokenProvider tokenProvider;
-
     private final SecurityProblemSupport problemSupport;
 
     public SecurityConfiguration(

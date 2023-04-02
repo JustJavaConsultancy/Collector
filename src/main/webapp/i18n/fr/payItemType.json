@@ -1,0 +1,27 @@
+{
+  "collectorApp": {
+    "payItemType": {
+      "home": {
+        "title": "PayItemTypes",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Pay Item Type",
+        "createOrEditLabel": "Créer ou éditer un Pay Item Type",
+        "notFound": "Aucun Pay Item Type trouvé"
+      },
+      "created": "Un nouveau Pay Item Type a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Pay Item Type avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Pay Item Type avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Pay Item Type {{ id }} ?"
+      },
+      "detail": {
+        "title": "Pay Item Type"
+      },
+      "description": "Description",
+      "rate": "Rate",
+      "type": "Type",
+      "rateType": "Rate Type",
+      "rentComponent": "Rent Component"
+    }
+  }
+}
