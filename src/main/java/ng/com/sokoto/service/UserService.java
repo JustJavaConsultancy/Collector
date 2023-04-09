@@ -12,6 +12,8 @@ import ng.com.sokoto.service.dto.AdminUserDTO;
 import ng.com.sokoto.service.dto.UserDTO;
 import ng.com.sokoto.web.domain.Authority;
 import ng.com.sokoto.web.domain.User;
+import ng.com.sokoto.web.dto.pouchii.CreateWalletExternal;
+import ng.com.sokoto.web.dto.pouchii.CreateWalletExternalResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -36,11 +38,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthorityRepository authorityRepository;
+    private final PouchiiClient pouchiiClient;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    public UserService(
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder,
+        AuthorityRepository authorityRepository,
+        PouchiiClient pouchiiClient
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.pouchiiClient = pouchiiClient;
     }
 
     public Mono<User> activateRegistration(String key) {
@@ -120,6 +129,8 @@ public class UserService {
                     newUser.setLangKey(userDTO.getLangKey());
                     // new user is not active
                     newUser.setActivated(true);
+                    newUser.setPhoneNumber(userDTO.getPhoneNumber());
+                    newUser.setGender(userDTO.getGender());
                     // new user gets registration key
                     //newUser.setActivationKey(RandomUtil.generateActivationKey());
                     return newUser;
@@ -134,6 +145,42 @@ public class UserService {
                     .doOnNext(user -> user.setAuthorities(authorities))
                     .flatMap(this::saveUser)
                     .doOnNext(user -> log.debug("Created Information for User: {}", user));
+            })
+            .flatMap(user ->
+                createWallet(userDTO)
+                    .map(walletExternalResponse -> {
+                        user.setBalance(Double.valueOf(walletExternalResponse.getData().get(0).getCurrentBalance()));
+                        user.setNuban(walletExternalResponse.getData().get(0).getNubanAccountNo());
+                        user.setWalletAccount(walletExternalResponse.getData().get(0).getAccountNumber());
+                        return user;
+                    })
+                    .flatMap(this::saveUser)
+            );
+    }
+
+    private Mono<CreateWalletExternalResponse> createWallet(AdminUserDTO userDTO) {
+        CreateWalletExternal walletExternal = new CreateWalletExternal();
+        walletExternal.setPhoneNumber(userDTO.getPhoneNumber());
+        walletExternal.setFirstName(userDTO.getFirstName());
+        walletExternal.setLastName(userDTO.getLastName());
+        walletExternal.setPassword(userDTO.getPassword());
+        walletExternal.setPhoneNumber(userDTO.getPhoneNumber());
+        walletExternal.setPin(userDTO.getPin());
+        walletExternal.setDateOfBirth(userDTO.getDateOfBirth().toString());
+        walletExternal.setGender(userDTO.getGender().getName());
+        walletExternal.setState(userDTO.getState());
+        walletExternal.setLocalGovt(userDTO.getLocalGovt());
+        walletExternal.setAddress(userDTO.getAddress());
+        walletExternal.setAccountName(userDTO.getFirstName() + userDTO.getLastName());
+        walletExternal.setEmail(userDTO.getEmail());
+
+        return pouchiiClient
+            .createWallet(walletExternal)
+            .doOnNext(walletExternalResponse -> {
+                String code = walletExternalResponse.getCode();
+                if (!("00".equalsIgnoreCase(code) || "success".equalsIgnoreCase(code))) {
+                    throw new RuntimeException("Error creating wallet");
+                }
             });
     }
 
@@ -163,6 +210,8 @@ public class UserService {
                 newUser.setResetKey(RandomUtil.generateResetKey());
                 newUser.setResetDate(Instant.now());
                 newUser.setActivated(true);
+                newUser.setPhoneNumber(userDTO.getPhoneNumber());
+                newUser.setGender(userDTO.getGender());
                 return newUser;
             })
             .flatMap(this::saveUser)
@@ -315,6 +364,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     public Flux<String> getAuthorities() {

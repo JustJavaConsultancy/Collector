@@ -7,14 +7,23 @@ import java.util.Collection;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import ng.com.sokoto.config.ApplicationProperties;
+import ng.com.sokoto.config.dbmigrations.InitialSetupMigration;
+import ng.com.sokoto.repository.AuthorityRepository;
+import ng.com.sokoto.security.AuthoritiesConstants;
+import ng.com.sokoto.web.domain.Authority;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+import org.springframework.web.reactive.function.client.WebClient;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
@@ -110,5 +119,25 @@ public class CollectorApp {
             "Config Server: \t{}\n----------------------------------------------------------",
             configServerStatus
         );
+    }
+
+    @Bean
+    public CommandLineRunner run(MongoTemplate template) {
+        return args -> {
+            System.out.println("Running Init...");
+            InitialSetupMigration migration = new InitialSetupMigration(template);
+            migration.changeSet();
+        };
+    }
+
+    @Bean
+    public WebClient getWebClientBuilder() {
+        final int size = 16 * 1024 * 1024;
+        final ExchangeStrategies strategies = ExchangeStrategies
+            .builder()
+            .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
+            .build();
+
+        return WebClient.builder().exchangeStrategies(strategies).build();
     }
 }

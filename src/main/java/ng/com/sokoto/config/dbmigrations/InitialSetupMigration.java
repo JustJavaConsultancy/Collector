@@ -8,6 +8,7 @@ import ng.com.sokoto.config.Constants;
 import ng.com.sokoto.security.AuthoritiesConstants;
 import ng.com.sokoto.web.domain.Authority;
 import ng.com.sokoto.web.domain.User;
+import ng.com.sokoto.web.domain.enumeration.Gender;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
@@ -70,6 +71,8 @@ public class InitialSetupMigration {
         userUser.setCreatedBy(Constants.SYSTEM);
         userUser.setCreatedDate(Instant.now());
         userUser.getAuthorities().add(userAuthority);
+        userUser.setPhoneNumber("08012345678");
+        userUser.setGender(Gender.MALE);
         return userUser;
     }
 
@@ -87,6 +90,8 @@ public class InitialSetupMigration {
         adminUser.setCreatedDate(Instant.now());
         adminUser.getAuthorities().add(adminAuthority);
         adminUser.getAuthorities().add(userAuthority);
+        adminUser.setPhoneNumber("08012345678");
+        adminUser.setGender(Gender.MALE);
         return adminUser;
     }
 }
