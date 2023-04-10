@@ -29,4 +29,14 @@ public class UserJWTController {
         userJWTService.authenticatePouchii(loginVM);
         return userJWTService.authenticate(loginVM);
     }
+
+    @PostMapping("/authenticate1")
+    public Mono<ResponseEntity<JWTToken>> authorize1(@RequestBody Mono<LoginVM> loginVM) {
+        return userJWTService.authenticate(loginVM);
+    }
+
+    @PostMapping("/authenticate2")
+    public Mono<User> authorize2(@RequestBody Mono<LoginVM> loginVM) {
+        return userJWTService.authenticatePouchii(loginVM);
+    }
 }

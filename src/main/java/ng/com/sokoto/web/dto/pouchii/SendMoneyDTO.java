@@ -25,37 +25,37 @@ import javax.annotation.Generated;
 public class SendMoneyDTO {
 
     @JsonProperty("destAccountNumber")
-    public String destAccountNumber;
+    private String destAccountNumber;
 
     @JsonProperty("amount")
-    public Integer amount;
+    private Integer amount;
 
     @JsonProperty("channel")
-    public String channel;
+    private String channel;
 
     @JsonProperty("sourceBankCode")
-    public String sourceBankCode;
+    private String sourceBankCode;
 
     @JsonProperty("sourceAccountNumber")
-    public String sourceAccountNumber;
+    private String sourceAccountNumber;
 
     @JsonProperty("destBankCode")
-    public String destBankCode;
+    private String destBankCode;
 
     @JsonProperty("pin")
-    public String pin;
+    private String pin;
 
     @JsonProperty("transRef")
-    public String transRef;
+    private String transRef;
 
     @JsonProperty("phoneNumber")
-    public String phoneNumber;
+    private String phoneNumber;
 
     @JsonProperty("narration")
-    public String narration;
+    private String narration;
 
     @JsonProperty("beneficiaryName")
-    public String beneficiaryName;
+    private String beneficiaryName;
 
     public String getDestAccountNumber() {
         return destAccountNumber;

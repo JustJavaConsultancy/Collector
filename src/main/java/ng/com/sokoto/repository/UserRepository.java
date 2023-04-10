@@ -24,4 +24,6 @@ public interface UserRepository extends ReactiveMongoRepository<User, String> {
     Flux<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
 
     Mono<Long> count();
+
+    Mono<User> findByWalletAccount(String walletAccount);
 }
