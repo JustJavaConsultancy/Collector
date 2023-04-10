@@ -73,6 +73,7 @@ public class InitialSetupMigration {
         userUser.getAuthorities().add(userAuthority);
         userUser.setPhoneNumber("08012345678");
         userUser.setGender(Gender.MALE);
+        userUser.setPouchiiToken("");
         return userUser;
     }
 
@@ -92,6 +93,7 @@ public class InitialSetupMigration {
         adminUser.getAuthorities().add(userAuthority);
         adminUser.setPhoneNumber("08012345678");
         adminUser.setGender(Gender.MALE);
+        adminUser.setPouchiiToken("");
         return adminUser;
     }
 }

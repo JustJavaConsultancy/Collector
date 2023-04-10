@@ -84,9 +84,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Field("wallet_account")
     private String walletAccount;
+
     private String nuban;
     private Double balance;
+
+    @Field("xxxx")
+    private String pouchiiToken;
 
     public String getId() {
         return id;
@@ -199,6 +204,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPouchiiToken() {
+        return pouchiiToken;
+    }
+
+    public void setPouchiiToken(String pouchiiToken) {
+        this.pouchiiToken = pouchiiToken;
     }
 
     @Override

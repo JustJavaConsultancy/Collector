@@ -64,6 +64,7 @@ public class AdminUserDTO {
     private String address;
     private Gender gender;
     private String password;
+    private String pouchiiToken;
 
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
@@ -252,6 +253,14 @@ public class AdminUserDTO {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getPouchiiToken() {
+        return pouchiiToken;
+    }
+
+    public void setPouchiiToken(String pouchiiToken) {
+        this.pouchiiToken = pouchiiToken;
     }
 
     @Override

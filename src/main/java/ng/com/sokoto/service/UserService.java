@@ -14,6 +14,7 @@ import ng.com.sokoto.web.domain.Authority;
 import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternal;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternalResponse;
+import ng.com.sokoto.web.rest.vm.LoginVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -152,6 +153,13 @@ public class UserService {
                         user.setBalance(Double.valueOf(walletExternalResponse.getData().get(0).getCurrentBalance()));
                         user.setNuban(walletExternalResponse.getData().get(0).getNubanAccountNo());
                         user.setWalletAccount(walletExternalResponse.getData().get(0).getAccountNumber());
+
+                        //TODO: Login the user after signup to get token
+                        //                        LoginVM loginVM = new LoginVM();
+                        //                        loginVM.setPassword(userDTO.getPassword());
+                        //                        loginVM.setUsername(userDTO.getLogin());
+                        //
+                        //                        pouchiiClient.login(loginVM).map()
                         return user;
                     })
                     .flatMap(this::saveUser)
