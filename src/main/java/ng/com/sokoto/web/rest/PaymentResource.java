@@ -21,6 +21,11 @@ public class PaymentResource {
 
     @PostMapping("/pay")
     public Mono<PaymentTransactionDTO> pay(@RequestBody SendMoneyDTO sendMoneyDTO) {
-        return paymentService.pay(sendMoneyDTO);
+        if ("walletToWallet".equalsIgnoreCase(sendMoneyDTO.getChannel())) {
+            return paymentService.payToWallet(sendMoneyDTO);
+        } else if ("walletToBank".equalsIgnoreCase(sendMoneyDTO.getChannel())) {
+            return paymentService.payToBank(sendMoneyDTO);
+        }
+        return Mono.error(new RuntimeException("Invalid Payment Channel"));
     }
 }

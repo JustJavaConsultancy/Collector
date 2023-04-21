@@ -23,14 +23,8 @@ public class PaymentService {
         this.userRepository = userRepository;
     }
 
-    public Mono<PaymentTransactionDTO> pay(SendMoneyDTO sendMoneyDTO) {
-        Mono<PaymentTransactionDTO> paymentTransactionDTOMono = SecurityUtils
-            .getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .flatMap(user -> Mono.just(user.getPouchiiToken()))
-            .doOnNext(token -> log.info("The user token: {}", token))
-            .flatMap(token -> pouchiiClient.sendMoney(sendMoneyDTO, token));
-
+    public Mono<PaymentTransactionDTO> payToWallet(SendMoneyDTO sendMoneyDTO) {
+        Mono<PaymentTransactionDTO> paymentTransactionDTOMono = sendMoney(sendMoneyDTO);
         Mono<User> destAccOwner = userRepository.findByWalletAccount(sendMoneyDTO.getDestAccountNumber());
         Mono<User> srcAccOwner = userRepository.findByWalletAccount(sendMoneyDTO.getSourceAccountNumber());
 
@@ -46,5 +40,29 @@ public class PaymentService {
 
                 return Mono.zip(userRepository.save(destOwner), userRepository.save(srcOwner)).map(resultTuple -> transactionDTO);
             });
+    }
+
+    public Mono<PaymentTransactionDTO> payToBank(SendMoneyDTO sendMoneyDTO) {
+        Mono<PaymentTransactionDTO> paymentTransactionDTOMono = sendMoney(sendMoneyDTO);
+        Mono<User> srcAccOwner = userRepository.findByWalletAccount(sendMoneyDTO.getSourceAccountNumber());
+
+        return Mono
+            .zip(paymentTransactionDTOMono, srcAccOwner)
+            .flatMap(tuple -> {
+                PaymentTransactionDTO transactionDTO = tuple.getT1();
+                User srcOwner = tuple.getT2();
+
+                srcOwner.setBalance(srcOwner.getBalance() - sendMoneyDTO.getAmount());
+                return userRepository.save(srcOwner).map(resultTuple -> transactionDTO);
+            });
+    }
+
+    private Mono<PaymentTransactionDTO> sendMoney(SendMoneyDTO sendMoneyDTO) {
+        return SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .flatMap(user -> Mono.just(user.getPouchiiToken()))
+            .doOnNext(token -> log.info("The user token: {}", token))
+            .flatMap(token -> pouchiiClient.sendMoney(sendMoneyDTO, token));
     }
 }
