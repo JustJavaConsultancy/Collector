@@ -1,7 +1,5 @@
 package ng.com.sokoto.web.rest;
 
-import java.util.concurrent.ExecutionException;
-import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.rest.vm.LoginVM;
 import ng.com.sokoto.web.service.UserJWTService;
 import ng.com.sokoto.web.service.UserJWTService.JWTToken;
@@ -26,18 +24,7 @@ public class UserJWTController {
     }
 
     @PostMapping(value = "/authenticate", consumes = "application/json;charset=utf-8", produces = "application/json;charset=utf-8")
-    public Mono<ResponseEntity<JWTToken>> authorize(@RequestBody Mono<LoginVM> loginVM) throws ExecutionException, InterruptedException {
-        //        userJWTService.authenticatePouchii(loginVM).subscribe();
+    public Mono<ResponseEntity<JWTToken>> authorize(@RequestBody Mono<LoginVM> loginVM) {
         return userJWTService.authenticate(loginVM);
-    }
-
-    @PostMapping("/authenticate1")
-    public Mono<ResponseEntity<JWTToken>> authorize1(@RequestBody Mono<LoginVM> loginVM) throws ExecutionException, InterruptedException {
-        return userJWTService.authenticate(loginVM);
-    }
-
-    @PostMapping("/authenticate2")
-    public Mono<User> authorize2(@RequestBody Mono<LoginVM> loginVM) {
-        return userJWTService.authenticatePouchii(loginVM);
     }
 }

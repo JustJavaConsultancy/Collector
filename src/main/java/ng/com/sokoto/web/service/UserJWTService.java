@@ -74,22 +74,21 @@ public class UserJWTService {
 
     public Mono<User> authenticatePouchii(Mono<LoginVM> loginVM) {
         log.info("Inside authenticatePouchii...");
-        return loginVM
-            .flatMap(login ->
-                userRepository
-                    .findOneByLogin(login.getUsername())
-                    .flatMap(user ->
-                        pouchiiClient
-                            .login(login)
-                            .map(authResponse -> {
-                                user.setPouchiiToken(authResponse.getToken());
-                                user.setBalance(authResponse.getWalletAccount().getActualBalance());
-
-                                return userRepository.save(user).doOnNext(u -> log.info("Logged in user on pouchii: {}", user));
-                            })
-                    )
-            )
-            .flatMap(mono -> mono);
+        return loginVM.flatMap(login ->
+            userRepository
+                .findOneByLogin(login.getUsername())
+                .switchIfEmpty(Mono.error(new UsernameNotFoundException("User not found")))
+                .flatMap(user ->
+                    pouchiiClient
+                        .login(login)
+                        .doOnSuccess(authResponse -> {
+                            user.setPouchiiToken(authResponse.getToken());
+                            user.setBalance(authResponse.getWalletAccount().getActualBalance());
+                            log.debug("Logged in user on pouchii: {}", user);
+                        })
+                        .flatMap(authResponse -> userRepository.save(user))
+                )
+        );
     }
 
     /**
