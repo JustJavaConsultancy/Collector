@@ -1,11 +1,14 @@
 package ng.com.sokoto.web.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.Gson;
+import java.util.concurrent.ExecutionException;
 import ng.com.sokoto.repository.UserRepository;
 import ng.com.sokoto.security.jwt.JWTFilter;
 import ng.com.sokoto.security.jwt.TokenProvider;
 import ng.com.sokoto.service.PouchiiClient;
 import ng.com.sokoto.service.UserService;
+import ng.com.sokoto.service.kafka.PouchiiLoginProducer;
 import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.rest.vm.LoginVM;
 import org.slf4j.Logger;
@@ -15,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -28,23 +32,34 @@ public class UserJWTService {
     private final PouchiiClient pouchiiClient;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final PouchiiLoginProducer pouchiiLoginProducer;
 
     public UserJWTService(
         TokenProvider tokenProvider,
         ReactiveAuthenticationManager authenticationManager,
         PouchiiClient pouchiiClient,
         UserRepository userRepository,
-        UserService userService
+        UserService userService,
+        PouchiiLoginProducer pouchiiLoginProducer
     ) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
         this.pouchiiClient = pouchiiClient;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.pouchiiLoginProducer = pouchiiLoginProducer;
     }
 
     public Mono<ResponseEntity<JWTToken>> authenticate(Mono<LoginVM> loginVM) {
         return loginVM
+            .map(login -> {
+                try {
+                    pouchiiLoginProducer.send(new Gson().toJson(login));
+                } catch (ExecutionException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                return login;
+            })
             .flatMap(login ->
                 authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()))
@@ -58,6 +73,7 @@ public class UserJWTService {
     }
 
     public Mono<User> authenticatePouchii(Mono<LoginVM> loginVM) {
+        log.info("Inside authenticatePouchii...");
         return loginVM
             .flatMap(login ->
                 userRepository
