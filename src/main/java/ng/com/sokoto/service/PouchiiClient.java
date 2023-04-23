@@ -1,6 +1,8 @@
 package ng.com.sokoto.service;
 
 import com.google.gson.Gson;
+import java.util.Objects;
+import ng.com.sokoto.service.dto.PasswordChangeDTO;
 import ng.com.sokoto.web.dto.pouchii.*;
 import ng.com.sokoto.web.rest.vm.LoginVM;
 import org.slf4j.Logger;
@@ -35,12 +37,25 @@ public class PouchiiClient {
     @Value("${pouchii.send-money}")
     private String SEND_MONEY;
 
+    @Value("${pouchii.change-password}")
+    private String CHANGE_PASSWORD;
+
+    @Value("${pouchii.forgot-password}")
+    private String FORGOT_PASSWORD;
+
     private final WebClient webClient;
 
     public PouchiiClient(WebClient webClient) {
         this.webClient = webClient;
     }
 
+    /*
+    1. Registration
+    2. Authentication
+    3. Send Money
+    4. Change Password
+    5.
+     */
     public Mono<CreateWalletExternalResponse> createWallet(CreateWalletExternal walletExternal) {
         walletExternal.setScheme(STSL_SCHEME);
         return webClient
@@ -113,6 +128,21 @@ public class PouchiiClient {
                 }
                 log.info("Returning Pouchii PaymentTransactionDTO...");
                 return Mono.just(paymentTransactionDTO);
+            });
+    }
+
+    public Mono<String> changePassword(PasswordChangeDTO passwordChangeDTO, String token) {
+        return webClient
+            .post()
+            .uri(BASE_URL + CHANGE_PASSWORD)
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+            .body(Mono.just(passwordChangeDTO), PasswordChangeDTO.class)
+            .retrieve()
+            .bodyToMono(Object.class)
+            .flatMap(pouchiiResponse -> {
+                String responseString = new Gson().toJson(pouchiiResponse);
+                log.info("Pouchii change password response: {}", responseString);
+                return Mono.just(responseString);
             });
     }
 }

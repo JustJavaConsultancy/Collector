@@ -255,6 +255,8 @@ pouchii:
   register: /wallet-external
   authenticate: /authenticate
   send-money: /send-money
+  change-password: /account/change-password
+  forgot-password: /forgot/password
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

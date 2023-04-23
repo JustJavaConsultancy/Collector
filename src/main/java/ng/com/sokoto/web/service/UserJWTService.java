@@ -7,7 +7,6 @@ import ng.com.sokoto.repository.UserRepository;
 import ng.com.sokoto.security.jwt.JWTFilter;
 import ng.com.sokoto.security.jwt.TokenProvider;
 import ng.com.sokoto.service.PouchiiClient;
-import ng.com.sokoto.service.UserService;
 import ng.com.sokoto.service.kafka.PouchiiLoginProducer;
 import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.rest.vm.LoginVM;
@@ -31,7 +30,6 @@ public class UserJWTService {
     private final ReactiveAuthenticationManager authenticationManager;
     private final PouchiiClient pouchiiClient;
     private final UserRepository userRepository;
-    private final UserService userService;
     private final PouchiiLoginProducer pouchiiLoginProducer;
 
     public UserJWTService(
@@ -39,14 +37,12 @@ public class UserJWTService {
         ReactiveAuthenticationManager authenticationManager,
         PouchiiClient pouchiiClient,
         UserRepository userRepository,
-        UserService userService,
         PouchiiLoginProducer pouchiiLoginProducer
     ) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
         this.pouchiiClient = pouchiiClient;
         this.userRepository = userRepository;
-        this.userService = userService;
         this.pouchiiLoginProducer = pouchiiLoginProducer;
     }
 

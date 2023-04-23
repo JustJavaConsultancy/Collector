@@ -10,11 +10,13 @@ import ng.com.sokoto.repository.UserRepository;
 import ng.com.sokoto.security.AuthoritiesConstants;
 import ng.com.sokoto.security.SecurityUtils;
 import ng.com.sokoto.service.dto.AdminUserDTO;
+import ng.com.sokoto.service.dto.PasswordChangeDTO;
 import ng.com.sokoto.service.dto.UserDTO;
 import ng.com.sokoto.web.domain.Authority;
 import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternal;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternalResponse;
+import ng.com.sokoto.web.rest.vm.KeyAndPasswordVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -95,7 +97,7 @@ public class UserService {
     }
 
     public Mono<User> registerUser(AdminUserDTO userDTO, String password) {
-        System.out.println(" The sent AdminUserDTO===" + userDTO);
+        log.info(" The sent AdminUserDTO===" + userDTO);
         return userRepository
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .flatMap(existingUser -> {
@@ -289,7 +291,7 @@ public class UserService {
     }
 
     private Mono<User> saveUser(User user) {
-        System.out.println(" Inside saveUser...............................................");
+        log.info(" Inside saveUser...............................................");
         return SecurityUtils
             .getCurrentUserLogin()
             .switchIfEmpty(Mono.just(Constants.SYSTEM))
@@ -298,30 +300,36 @@ public class UserService {
                     user.setCreatedBy(login);
                 }
                 user.setLastModifiedBy(login);
-                System.out.println(" Saving the User Here........................");
+                log.info(" Saving the User Here........................");
                 return userRepository.save(user);
             });
     }
 
     public Mono<Void> changePassword(Mono<String> login, String currentClearTextPassword, String newPassword) {
-        System.out.println(" Inside changePassword...." + SecurityUtils.getCurrentUserJWT());
+        log.info(" Inside changePassword...." + SecurityUtils.getCurrentUserJWT());
         /*        Mono<String> jwt = SecurityUtils.getCurrentUserLogin();
         jwt.subscribe(x-> System.out.println(" The login Here ==========================="+x));*/
         login
             .flatMap(userRepository::findOneByLogin)
             .map(user -> {
-                System.out.println(" The User in here....................." + user);
+                log.info(" The User in here....................." + user);
                 String currentEncryptedPassword = user.getPassword();
                 if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
                     throw new InvalidPasswordException();
                 }
                 String encryptedPassword = passwordEncoder.encode(newPassword);
                 user.setPassword(encryptedPassword);
-                System.out.println(" About to return user to the next stage in the pipe.......................");
+                log.info(" About to return user to the next stage in the pipe.......................");
+
+                pouchiiClient
+                    .changePassword(new PasswordChangeDTO(currentClearTextPassword, newPassword), user.getPouchiiToken())
+                    .subscribeOn(Schedulers.parallel())
+                    .subscribe();
+
                 return user;
             })
             .flatMap(this::saveUser)
-            .doOnNext(u -> System.out.println(" The user finally saved=====" + u))
+            .doOnNext(u -> log.info(" The user finally saved=====" + u))
             .subscribe();
 
         return null;
