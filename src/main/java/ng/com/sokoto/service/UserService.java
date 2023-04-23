@@ -14,9 +14,9 @@ import ng.com.sokoto.service.dto.PasswordChangeDTO;
 import ng.com.sokoto.service.dto.UserDTO;
 import ng.com.sokoto.web.domain.Authority;
 import ng.com.sokoto.web.domain.User;
+import ng.com.sokoto.web.dto.pouchii.ChangePinDTO;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternal;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternalResponse;
-import ng.com.sokoto.web.rest.vm.KeyAndPasswordVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -333,6 +333,17 @@ public class UserService {
             .subscribe();
 
         return null;
+    }
+
+    public void changePin(Mono<String> loginUser, ChangePinDTO changePinDTO) {
+        log.info(" Inside changePin...." + SecurityUtils.getCurrentUserJWT().subscribe());
+
+        loginUser
+            .flatMap(userRepository::findOneByLogin)
+            .flatMap(user ->
+                pouchiiClient.changePin(changePinDTO, user.getPouchiiToken()).doOnSuccess(response -> log.info("Pin changed successfully!"))
+            )
+            .subscribe();
     }
 
     public Flux<AdminUserDTO> getAllManagedUsers(Pageable pageable) {

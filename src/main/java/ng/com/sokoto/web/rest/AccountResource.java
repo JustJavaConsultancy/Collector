@@ -11,6 +11,7 @@ import ng.com.sokoto.service.MailService;
 import ng.com.sokoto.service.UserService;
 import ng.com.sokoto.service.dto.AdminUserDTO;
 import ng.com.sokoto.service.dto.PasswordChangeDTO;
+import ng.com.sokoto.web.dto.pouchii.ChangePinDTO;
 import ng.com.sokoto.web.rest.errors.*;
 import ng.com.sokoto.web.rest.vm.KeyAndPasswordVM;
 import ng.com.sokoto.web.rest.vm.ManagedUserVM;
@@ -218,6 +219,15 @@ public class AccountResource {
             .completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
             .switchIfEmpty(Mono.error(new AccountResourceException("No user was found for this reset key")))
             .then();
+    }
+
+    @PostMapping(path = "/account/change-pin")
+    public Mono<ApiResponse<Object>> changePin(@AuthenticationPrincipal Mono<UserDetails> details, @RequestBody ChangePinDTO changePinDTO) {
+        Mono<String> loginUser = details.cast(User.class).map(User::getUsername);
+
+        ApiResponse<Object> apiResponse = new ApiResponse<>("Success", HttpStatus.OK.value(), null);
+        userService.changePin(loginUser, changePinDTO);
+        return Mono.just(apiResponse);
     }
 
     private static boolean isPasswordLengthInvalid(String password) {

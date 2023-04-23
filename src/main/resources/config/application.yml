@@ -257,6 +257,7 @@ pouchii:
   send-money: /send-money
   change-password: /account/change-password
   forgot-password: /forgot/password
+  change-pin: /account/change-pin
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
