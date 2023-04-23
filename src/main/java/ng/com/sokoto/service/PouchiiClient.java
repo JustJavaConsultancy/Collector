@@ -1,7 +1,6 @@
 package ng.com.sokoto.service;
 
 import com.google.gson.Gson;
-import java.util.Objects;
 import ng.com.sokoto.service.dto.PasswordChangeDTO;
 import ng.com.sokoto.web.dto.pouchii.*;
 import ng.com.sokoto.web.rest.vm.LoginVM;
@@ -39,9 +38,6 @@ public class PouchiiClient {
 
     @Value("${pouchii.change-password}")
     private String CHANGE_PASSWORD;
-
-    @Value("${pouchii.forgot-password}")
-    private String FORGOT_PASSWORD;
 
     @Value("${pouchii.change-pin}")
     private String CHANGE_PIN;

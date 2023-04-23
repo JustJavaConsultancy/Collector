@@ -36,7 +36,7 @@ public class PaymentService {
                 User srcOwner = tuple.getT3();
 
                 destOwner.setBalance(destOwner.getBalance() + sendMoneyDTO.getAmount());
-                srcOwner.setBalance(srcOwner.getBalance() - sendMoneyDTO.getAmount());
+                srcOwner.setBalance(srcOwner.getBalance() - sendMoneyDTO.getAmount() - transactionDTO.changes);
 
                 return Mono.zip(userRepository.save(destOwner), userRepository.save(srcOwner)).map(resultTuple -> transactionDTO);
             });
@@ -52,7 +52,7 @@ public class PaymentService {
                 PaymentTransactionDTO transactionDTO = tuple.getT1();
                 User srcOwner = tuple.getT2();
 
-                srcOwner.setBalance(srcOwner.getBalance() - sendMoneyDTO.getAmount());
+                srcOwner.setBalance(srcOwner.getBalance() - sendMoneyDTO.getAmount() - transactionDTO.changes);
                 return userRepository.save(srcOwner).map(resultTuple -> transactionDTO);
             });
     }
