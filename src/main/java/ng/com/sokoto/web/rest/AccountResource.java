@@ -1,7 +1,6 @@
 package ng.com.sokoto.web.rest;
 
 import java.security.Principal;
-import java.time.Duration;
 import java.util.Objects;
 import javax.validation.Valid;
 import ng.com.sokoto.controller.ApiResponse;
@@ -12,15 +11,16 @@ import ng.com.sokoto.service.UserService;
 import ng.com.sokoto.service.dto.AdminUserDTO;
 import ng.com.sokoto.service.dto.PasswordChangeDTO;
 import ng.com.sokoto.web.dto.pouchii.ChangePinDTO;
-import ng.com.sokoto.web.rest.errors.*;
+import ng.com.sokoto.web.dto.pouchii.LostPinDTO;
+import ng.com.sokoto.web.rest.errors.EmailAlreadyUsedException;
+import ng.com.sokoto.web.rest.errors.InvalidPasswordException;
+import ng.com.sokoto.web.rest.errors.LoginAlreadyUsedException;
 import ng.com.sokoto.web.rest.vm.KeyAndPasswordVM;
 import ng.com.sokoto.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
@@ -29,8 +29,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
-import reactor.core.scheduler.Schedulers;
 
 /**
  * REST controller for managing the current user's account.
@@ -136,7 +134,7 @@ public class AccountResource {
                     .hasElement()
                     .flatMap(emailExists -> {
                         if (emailExists) {
-                            throw new EmailAlreadyUsedException();
+                            return Mono.error(new EmailAlreadyUsedException());
                         }
                         return userRepository.findOneByLogin(userLogin);
                     })
@@ -227,6 +225,15 @@ public class AccountResource {
 
         ApiResponse<Object> apiResponse = new ApiResponse<>("Success", HttpStatus.OK.value(), null);
         userService.changePin(loginUser, changePinDTO);
+        return Mono.just(apiResponse);
+    }
+
+    @PostMapping(path = "/account/forgot-pin")
+    public Mono<ApiResponse<Object>> forgotPin(@AuthenticationPrincipal Mono<UserDetails> details, @RequestBody LostPinDTO lostPinDTO) {
+        Mono<String> loginUser = details.cast(User.class).map(User::getUsername);
+
+        ApiResponse<Object> apiResponse = new ApiResponse<>("Success", HttpStatus.OK.value(), null);
+        userService.forgotPin(loginUser, lostPinDTO);
         return Mono.just(apiResponse);
     }
 

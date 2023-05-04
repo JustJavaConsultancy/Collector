@@ -42,6 +42,9 @@ public class PouchiiClient {
     @Value("${pouchii.change-pin}")
     private String CHANGE_PIN;
 
+    @Value("${pouchii.forgot-pin}")
+    private String FORGOT_PIN;
+
     private final WebClient webClient;
 
     public PouchiiClient(WebClient webClient) {
@@ -54,6 +57,7 @@ public class PouchiiClient {
     3. Send Money
     4. Change Password
     5. Change PIN
+    6. Forgot PIN
      */
     public Mono<CreateWalletExternalResponse> createWallet(CreateWalletExternal walletExternal) {
         walletExternal.setScheme(STSL_SCHEME);
@@ -156,6 +160,21 @@ public class PouchiiClient {
             .flatMap(pouchiiResponse -> {
                 String responseString = new Gson().toJson(pouchiiResponse);
                 log.info("Pouchii change pin response: {}", responseString);
+                return Mono.just(responseString);
+            });
+    }
+
+    public Mono<String> forgotPin(LostPinDTO lostPinDTO, String token) {
+        return webClient
+            .post()
+            .uri(BASE_URL + FORGOT_PIN)
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+            .body(Mono.just(lostPinDTO), LostPinDTO.class)
+            .retrieve()
+            .bodyToMono(Object.class)
+            .flatMap(pouchiiResponse -> {
+                String responseString = new Gson().toJson(pouchiiResponse);
+                log.info("Pouchii forgot pin response: {}", responseString);
                 return Mono.just(responseString);
             });
     }

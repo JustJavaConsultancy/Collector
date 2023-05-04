@@ -17,6 +17,7 @@ import ng.com.sokoto.web.domain.User;
 import ng.com.sokoto.web.dto.pouchii.ChangePinDTO;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternal;
 import ng.com.sokoto.web.dto.pouchii.CreateWalletExternalResponse;
+import ng.com.sokoto.web.dto.pouchii.LostPinDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -342,6 +343,17 @@ public class UserService {
             .flatMap(userRepository::findOneByLogin)
             .flatMap(user ->
                 pouchiiClient.changePin(changePinDTO, user.getPouchiiToken()).doOnSuccess(response -> log.info("Pin changed successfully!"))
+            )
+            .subscribe();
+    }
+
+    public void forgotPin(Mono<String> loginUser, LostPinDTO lostPinDTO) {
+        log.info(" Inside lostPin...." + SecurityUtils.getCurrentUserJWT().subscribe());
+
+        loginUser
+            .flatMap(userRepository::findOneByLogin)
+            .flatMap(user ->
+                pouchiiClient.forgotPin(lostPinDTO, user.getPouchiiToken()).doOnSuccess(response -> log.info("Pin changed successfully!"))
             )
             .subscribe();
     }
